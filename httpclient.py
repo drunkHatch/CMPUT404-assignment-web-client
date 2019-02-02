@@ -61,12 +61,13 @@ class HTTPClient(object):
         return 200
 
     def get_headers(self,data):
-        return None
+        head_body = data.split("\r\n\r\n")
+        return head_body[0]
 
     def get_body(self, data):
         head_body = data.split("\r\n\r\n")
         if len(head_body) == 1: # nobody
-            return head_body[0]
+            return ""
         else: # body exists
             return head_body[1]
 
@@ -102,12 +103,18 @@ class HTTPClient(object):
         response = self.recvall(self.socket)
         code = self.get_code(response)
         body = self.get_body(response)
+        if len(body) == 0:
+            body = self.get_headers(response)
+            print(self.get_headers(response), END)
+        else:
+            print(self.get_headers(response), END, END, self.get_body(response))
 
+        self.close()
         return HTTPResponse(code, body)
 
     def POST(self, url, args=None):
         json_args = None
-        code = 500            
+        code = 500
         body = ""
         if args:
             # sending_body = self.generate_body(args)
@@ -126,7 +133,13 @@ class HTTPClient(object):
         response = self.recvall(self.socket)
         code = self.get_code(response)
         body = self.get_body(response)
+        if len(body) == 0:
+            body = self.get_headers(response)
+            print(self.get_headers(response), END)
+        else:
+            print(self.get_headers(response), END, END, self.get_body(response))
 
+        self.close()
         return HTTPResponse(code, body)
 
     def command(self, url, command="GET", args=None):
@@ -185,4 +198,3 @@ if __name__ == "__main__":
         client.command( sys.argv[2], sys.argv[1] )
     else:
         client.command( sys.argv[1] )
-    client.close()
