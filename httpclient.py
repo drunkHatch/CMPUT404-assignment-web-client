@@ -149,9 +149,13 @@ class HTTPClient(object):
             return self.GET( url, args )
 
     def generate_request(self, method, parse_result, length=-1):
+        print("!!!!!!!!!!!!!!!!",parse_result.path)
         if method == "POST":
             req_method = method + " "
-            req_path = parse_result.path + " "
+            if len(parse_result.path) == 0:
+                req_path = "/ "
+            else:
+                req_path = parse_result.path + " "
             req_protocol = "HTTP/1.1" + END
             req_host = "Host: " + parse_result.netloc + END
             req_cont_type = "Content-Type: application/x-www-form-urlencoded" + END
@@ -162,7 +166,10 @@ class HTTPClient(object):
             return req_method + req_path + req_protocol + req_host + req_cont_type + "Connection: close" + END + END
 
         req_method = method + " "
-        req_path = parse_result.path
+        if len(parse_result.path) == 0:
+            req_path = "/ "
+        else:
+            req_path = parse_result.path + " "
         req_protocol = "HTTP/1.1" + END
         req_host = "Host: " + parse_result.netloc + END + END
 
