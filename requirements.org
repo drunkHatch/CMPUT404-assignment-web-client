@@ -25,25 +25,27 @@
      a HTTPResponse object
 
 ** Requirements
-   - [1] Implement basic HTTP GET
-   - [1] Implement basic HTTP POST
-   - [1] The httpclient can pass all the tests in freetests.py
-   - [?] The webserver can pass all the tests in not-free-tests.py
+   - [ ] Implement basic HTTP GET
+   - [ ] Implement basic HTTP POST
+   - [ ] The httpclient can pass all the tests in freetests.py
+   - [ ] The webserver can pass all the tests in not-free-tests.py
      (you don't have this one! it can change -- but it will be fair to the user stories/requirements)
-   - [1] HTTP POST can post vars
-   - [1] HTTP POST handles at least Content-Type:
+   - [ ] HTTP POST can post vars
+   - [ ] HTTP POST handles at least Content-Type:
      application/x-www-form-urlencoded
-   - [?] httpclient can handle 404 requests and 200 requests
+   - [ ] httpclient can handle 404 requests and 200 requests
 
 ** Restrictions
-   - [1] Use Python 3
-   - [?] Must run in the undergrad lab (Ubuntu 16.04)
-   - [1] License your httpclient properly (use an OSI approved license)
+   - [ ] Use Python 3.6 (3.6.7 is preferred)
+   - [ ] Must run in the VM without virtualenv (Ubuntu 18.10, Python 3.6)
+   - [ ] License your httpclient properly (use an OSI approved license)
      - Put your name on it!
-   - [1] You cannot use a Web Client library except for urllib utils
+   - [ ] You cannot use a Web Client library except for urllib utils
      to convert strings to url-encode and query-string format and back
       - urllib.request is BANNED
-   - [1] You should use the socket library that comes with python
+      - urllib.parse is OKAY for parsing URLs
+      - you have to parse headers yourself
+   - [ ] You should use the socket library that comes with python
 
 ** Recommendations
    - Use the httpclient.py skeleton.
@@ -52,16 +54,29 @@
    - It's a good idea to send the Host header in a GET or POST
 
 ** Submission Instructions
-   - Upload your version of httpclient.py to eClass.
-
-   - To mark your assignment I should be able to type:
-    : python freetests.py
-    with your version of httpclient.py in the same directory and it should run.
+   - Fork my repository from github
+     https://github.com/abramhindle/CMPUT404-assignment-web-client
+   - Push your commits to your fork
+   - In EClass for this assignment submit a URL to the git
+     repository. I would prefer github for the host.
+     - Line 1: the git URL
+     - Line 2: Your CCID
+   - An example submission looks like this
+    #+BEGIN_SRC bash
+        https://github.com/youruserid/thisassignment.git 
+        yourccid
+    #+END_SRC
+   - To mark your assignment I should be able to type:     
+    #+BEGIN_SRC bash
+        git clone http://github.com/youruserid/thisassignment.git yourccid
+        cd yourccid
+        python3 freetests.py
+    #+END_SRC
 
    - Marks will be deducted if I cannot successfully do this.
-
-   - Marks will be deducted for using library code that does the assignment
-
+     
+   - Marks will be deducted for using library code that does the assignment.
+   
    - Marks can be deducated for egregious violation of requirements (e.g. hard
      coding path names etc.).
 
