@@ -58,7 +58,6 @@ class HTTPClient(object):
 
                 return int(tmp)
 
-        print(lines[0])
         lines = data.split("\n")
         if "HTTP/1.1" in lines[0]:
             tmp = lines[0]
@@ -114,14 +113,13 @@ class HTTPClient(object):
         self.sendall(data)
         response = self.recvall(self.socket)
         code = self.get_code(response)
-        # print("response is: ", response)
-        # print("response end")
         body = self.get_body(response)
         if len(body) == 0:
-            body = self.get_headers(response)
-            print(self.get_headers(response), END)
+            body = ""
+            pass
         else:
-            print(self.get_headers(response), END, END, self.get_body(response))
+            body = self.get_body(response)
+            print(self.get_body(response))
 
         self.close()
         return HTTPResponse(code, body)
@@ -147,12 +145,18 @@ class HTTPClient(object):
         response = self.recvall(self.socket)
         code = self.get_code(response)
         body = self.get_body(response)
-        if len(body) == 0:
-            body = self.get_headers(response)
-            print(self.get_headers(response), END)
-        else:
-            print(self.get_headers(response), END, END, self.get_body(response))
+        print("<======================response begins=======================>")
 
+        if len(body) == 0:
+            body = ""
+            # body = self.get_headers(response)
+            # print(self.get_headers(response), END)
+            pass
+        else:
+            body = self.get_body(response)
+            print(self.get_body(response))
+
+        print("<======================response ends=======================>")
         self.close()
         return HTTPResponse(code, body)
 
