@@ -77,8 +77,6 @@ class HTTPClient(object):
 
     def get_body(self, data):
         head_body = data.split("\r\n\r\n")
-        print(data)
-        print("end")
         if len(head_body) == 1: # nobody
             return ""
         else: # body exists
@@ -114,16 +112,13 @@ class HTTPClient(object):
         data = self.generate_request("GET", parse_result)
         self.sendall(data)
         response = self.recvall(self.socket)
-        print("START",data, "END")
         code = self.get_code(response)
         body = self.get_body(response)
         if len(body) == 0:
             body = ""
             pass
         else:
-            # body = self.get_body(response)
-            # print(self.get_body(response))
-            pass
+            print(body)
 
         self.close()
         return HTTPResponse(code, body)
@@ -149,18 +144,11 @@ class HTTPClient(object):
         response = self.recvall(self.socket)
         code = self.get_code(response)
         body = self.get_body(response)
-        print("<======================response begins=======================>")
-
         if len(body) == 0:
             body = ""
-            # body = self.get_headers(response)
-            # print(self.get_headers(response), END)
             pass
         else:
-            body = self.get_body(response)
-            # print(self.get_body(response))
-
-        print("<======================response ends=======================>")
+            print(body)
         self.close()
         return HTTPResponse(code, body)
 
