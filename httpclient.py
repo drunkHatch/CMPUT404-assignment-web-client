@@ -58,6 +58,18 @@ class HTTPClient(object):
 
                 return int(tmp)
 
+        print(lines[0])
+        lines = data.split("\n")
+        if "HTTP/1.1" in lines[0]:
+            tmp = lines[0]
+            tmp = tmp.replace("HTTP/1.1 ", "")
+
+            try:
+                return int(tmp[0:3])
+            except Exception as e:
+                print("fail to catch status code")
+                return 500
+
         return 200
 
     def get_headers(self,data):
@@ -102,6 +114,8 @@ class HTTPClient(object):
         self.sendall(data)
         response = self.recvall(self.socket)
         code = self.get_code(response)
+        # print("response is: ", response)
+        # print("response end")
         body = self.get_body(response)
         if len(body) == 0:
             body = self.get_headers(response)
@@ -149,7 +163,6 @@ class HTTPClient(object):
             return self.GET( url, args )
 
     def generate_request(self, method, parse_result, length=-1):
-        print("!!!!!!!!!!!!!!!!",parse_result.path)
         if method == "POST":
             req_method = method + " "
             if len(parse_result.path) == 0:
